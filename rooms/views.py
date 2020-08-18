@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
+from django.core.paginator import Paginator
 from .forms import *
 
 class HomeView(ListView):
     model = Room
-    paginate_by = 10
+    paginate_by = 12
     paginate_orphans = 3
     ordering = "created"
     context_object_name = "rooms"
@@ -70,7 +71,10 @@ def search(request):
             for facility in facilities:
                 filter_args["facilities"] = facility
 
-            rooms = Room.objects.filter(**filter_args)
+            qset = Room.objects.filter(**filter_args).order_by("-created")
+            paginator = Paginator(qset, 12, orphans=3)
+            page = request.GET.get("page", 1)
+            rooms = paginator.get_page(page)
 
             return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
 

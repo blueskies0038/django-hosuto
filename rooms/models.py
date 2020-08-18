@@ -29,6 +29,13 @@ class HouseRule(AbstractItem):
     class Meta:
         verbose_name = "House Rule"
 
+class Photo(core_models.TimeStampedModel):
+    caption = models.CharField(max_length=80)
+    file = models.ImageField(upload_to="room-photos")
+    room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.caption
 
 class Room(core_models.TimeStampedModel):
     name = models.CharField(max_length=120)
@@ -68,11 +75,11 @@ class Room(core_models.TimeStampedModel):
                 all_ratings += review.rating_average()
             return round(all_ratings / len(all_reviews), 2)
 
-class Photo(core_models.TimeStampedModel):
-    caption = models.CharField(max_length=80)
-    file = models.ImageField(upload_to="room-photos")
-    room = models.ForeignKey(Room, related_name="photos", on_delete=models.CASCADE)
+    def first_photo(self):
+        try:
+            photo, = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
-    def __str__(self):
-        return self.caption
 
