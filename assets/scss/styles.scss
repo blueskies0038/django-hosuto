@@ -21,11 +21,26 @@
     @apply text-center font-light rounded-sm border border-gray-700;
 }
 
-input{
+.btn-link{
+    @apply w-7/12 bg-purple-500 text-white text-center rounded-md py-2 border border-gray-700;
+}
+
+input,
+textarea,
+select{
     @apply w-full text-left py-3 px-4 mb-3 font-light rounded-sm border border-gray-700;
     &:focus{
         @apply outline-none border-purple-400;
     }
+}
+
+textarea{
+    resize: none;
+    height: 120px;
+}
+
+select{
+    height: 50px;
 }
 
 form{
@@ -64,17 +79,45 @@ form{
 .message{
     animation: messageFadeIn 5s ease-in-out forwards;
     &.error{
-        @apply bg-red-600;
+        @apply z-20 bg-red-600;
     }
     &.info{
-        @apply bg-purple-400;
+        @apply z-20 bg-purple-400;
     }
     &.success{
-        @apply bg-green-500;
+        @apply z-20 bg-green-500;
     }
     &.warning{
-        @apply bg-yellow-400;
+        @apply z-20 bg-yellow-400;
     }
+}
+
+ul{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.slick-dots{
+    @apply absolute mb-20 list-none flex justify-center items-center w-full text-transparent;
+    font-size: 0;
+    li{
+        @apply relative inline-block cursor-pointer;
+        button{
+            @apply relative bg-gray-500 opacity-25 w-8 h-2 m-2 p-0 ;
+        }
+    }
+}
+
+.slick-arrow{
+    font-size: 0;
+}
+
+.cal-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 10px;
+    justify-items: center;
 }
 
 @tailwind utilities;

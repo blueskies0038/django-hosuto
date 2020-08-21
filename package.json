@@ -2,7 +2,9 @@
   "name": "airbnb",
   "version": "1.0.0",
   "description": "",
-  "dependencies": {},
+  "dependencies": {
+    "vue-carousel": "^0.18.0"
+  },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "gulp": "^4.0.2",

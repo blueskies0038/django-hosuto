@@ -3,6 +3,7 @@ from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_models
+from cal import Calendar
 
 class AbstractItem(core_models.TimeStampedModel):
     name = models.CharField(max_length=80)
@@ -82,4 +83,11 @@ class Room(core_models.TimeStampedModel):
         except ValueError:
             return None
 
+    def get_all_photos(self):
+        photos = self.photos.all()[:]
+        return photos
 
+    def get_calendars(self):
+        this_month = Calendar(2020, 8)
+        next_month = Calendar(2020, 9)
+        return [this_month, next_month]

@@ -1,0 +1,7 @@
+<div class="{{h|default:'h-20'}} {{w|default:'w-20'}} bg-gray-700 rounded-full text-white flex justify-center items-center overflow-hidden">
+    {% if user.avatar %}
+        <img class="w-full h-full" src="{{user.avatar.url}}">
+    {% else %}
+        <span class="{{text|default:'text-3xl'}}">{{user.first_name|first}}</span>
+    {% endif %}
+</div>
