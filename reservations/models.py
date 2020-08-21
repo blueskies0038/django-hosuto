@@ -1,6 +1,19 @@
+import datetime
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
+
+
+class BookedDay(core_models.TimeStampedModel):
+    day = models.DateField()
+    reservation = models.ForeignKey("reservation", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Booked Day"
+        verbose_name_plural = "Booked Days"
+
+    def __str__(self):
+        return str(self.day)
 
 class Reservation(core_models.TimeStampedModel):
     STATUS_PENDING = "pending"
@@ -10,8 +23,8 @@ class Reservation(core_models.TimeStampedModel):
     STATUS_CHOICES = ((STATUS_PENDING, "Pending"), (STATUS_CONFIRMED, "Confirmed"), (STATUS_CANCELED, "Canceled"),)
 
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=STATUS_PENDING)
-    guest = models.ForeignKey("users.User", related_name="reservations", on_delete=models.CASCADE)
-    room = models.ForeignKey("rooms.Room", related_name="reservations", on_delete=models.CASCADE)
+    guest = models.ForeignKey("users.User", related_name="reservation", on_delete=models.CASCADE)
+    room = models.ForeignKey("rooms.Room", related_name="reservation", on_delete=models.CASCADE)
     check_in = models.DateField()
     check_out = models.DateField()
 
@@ -27,3 +40,18 @@ class Reservation(core_models.TimeStampedModel):
         now = timezone.now().date()
         return now > self.check_out
     is_finished.boolean = True
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            start = self.check_in
+            end = self.check_out
+            difference = end - start
+            existing_booked_day = BookedDay.objects.filter(day__range=(start, end)).exists()
+            if not existing_booked_day:
+                super().save(*args, **kwargs)
+                for i in range(difference.days + 1):
+                    day = start + datetime.timedelta(days=i)
+                    BookedDay.objects.create(day=day, reservation=self)
+
+        else:
+            return super().save(*args, **kwargs)
