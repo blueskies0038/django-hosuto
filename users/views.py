@@ -1,8 +1,10 @@
 import os
 import requests
+from django.http import HttpResponse
+from django.utils import translation
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
-from django.views.generic import FormView, DetailView, UpdateView
+from django.views.generic import FormView, DetailView, UpdateView, View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
@@ -11,6 +13,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from . import forms
 from .models import *
 from .mixins import *
+from reservations import models as reservation_models
 
 class LoginView(LoggedOutOnlyView, FormView):
     template_name = "users/login.html"
@@ -23,10 +26,6 @@ class LoginView(LoggedOutOnlyView, FormView):
         if user is not None:
             login(self.request, user)
         return super().form_valid(form)
-
-    def get(self, request):
-        form = forms.LoginForm()
-        return render(request, 'users/login.html', {'form': form,})
 
     def get_success_url(self):
         next_arg = self.request.GET.get("next")
@@ -179,3 +178,9 @@ def switch_hosting(request):
     except KeyError:
         request.session["is_hosting"] = True
     return redirect(reverse("core:home"))
+
+@login_required
+def all_reservations(request, pk):
+    guest = User.objects.get(pk=pk)
+    reservations = reservation_models.Reservation.objects.all().filter(guest=guest)
+    return render(request, "reservations/all.html", {"reservations": reservations})

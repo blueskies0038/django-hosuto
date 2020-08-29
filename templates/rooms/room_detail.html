@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load is_booked %}
+{% load is_booked on_favs %}
 
 {% block content %}
 
@@ -17,10 +17,17 @@
         <div class="xl:w-1/2 lg:w-1/2 md:w-full sm:w-full">
             <div class="flex justify-between">
                 <div class="mb-2">
-                    <h4 class="text-lg font-medium mb-px">{{room.name}}</h4>
+                    <h4 class="text-xl font-medium mb-px">{{room.name}}</h4>
                     <span class="text-gray-700 font-light">{{room.city}}</span>
+                    <p class="mt-2">
+                        {% on_favs room as on_favs_boolean %}
+                        {% if on_favs_boolean %}
+                            <a href="{% url 'lists:toggle-room' room.pk %}?action=remove"><i class="fas fa-heart text-red-600 mr-1"></i>Unsave</a>
+                        {% else %}
+                            <a  href="{% url 'lists:toggle-room' room.pk %}?action=add"><i class="fas fa-heart text-white mr-1"></i>Save</a>
+                        {% endif %}
+                    </p>
                 </div>
-                <div></div>
                 <a href="{{room.host.get_absolute_url}}" class="flex flex-col items-center">
                     {% include 'mixins/user_avatar.html' with user=room.host %}
                     <span class="mt-1 text-gray-600">{{room.host.first_name}}</span>

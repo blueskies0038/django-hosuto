@@ -30,5 +30,17 @@
             </div>
         {% endif %}
     </div>
- 
+    <div class="container mx-auto">
+        {% if user_obj.rooms.count > 0 %}
+            <div class="container flex flex-col items-center">
+                <h3 class="mb-12 text-lg">Rooms</h3>
+                <div class="flex w-full flex-wrap">
+                    {% for room in user_obj.rooms.all %}
+                        {% include 'mixins/room_card.html' with room=room %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
 {% endblock %}
