@@ -20,9 +20,9 @@
             </form>
             {% endblock search-bar %}
         </div>
-        <input class="menu-btn" type="checkbox" id="menu-btn" />
-        <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+        <div class="dropdown inline relative h-full">
         {% include 'partials/nav.html' %}
+        </div>
     </header>
 
     {% block content %}
@@ -51,6 +51,7 @@
                 }
             ]
         });
+
     </script>
 </body>
 </html>

@@ -10,10 +10,10 @@
 <body>
     <div class="container mx-auto">
 
-        <div class="rounded-xl w-full h-50vh mt-32 mb-24 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1062&q=80')">
+        <div class="xl:rounded-xl lg:rounded-xl md:rounded-xl sm:rounded-xl rounded-none w-full h-50vh mt-32 mb-24 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1062&q=80')">
         </div>
 
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap items-center">
         {% for room in rooms %}
             {% include 'mixins/room_card.html' with room=room %}
         {% endfor %}

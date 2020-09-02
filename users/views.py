@@ -181,6 +181,10 @@ def switch_hosting(request):
 
 @login_required
 def all_reservations(request, pk):
+    host = User.objects.get(pk=pk)
     guest = User.objects.get(pk=pk)
-    reservations = reservation_models.Reservation.objects.all().filter(guest=guest)
-    return render(request, "reservations/all.html", {"reservations": reservations})
+    reservations = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="pending")
+    confirmed = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="confirmed")
+    all_reservations = reservation_models.Reservation.objects.all()
+    guest_reservations = [r for r in all_reservations if r.room.host == host]
+    return render(request, "reservations/all.html", {"reservations": reservations, "confirmed": confirmed, "guest_reservations": guest_reservations})

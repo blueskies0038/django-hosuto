@@ -1,6 +1,10 @@
-    <ul class="flex items-center text-sm font-medium h-full">
+    {% if user.is_authenticated%}
+    <button id="dropdown-button" class="text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center h-full">
+        <span class="mr-1">Dropdown</span>
+    </button>
+    <ul id="dropdown-menu" class="dropdown-menu absolute hidden pt-1 h-full">
         {% if user.is_authenticated %}
-            <li class="nav_link">
+            <li class="nav_link border-t-2 border-gray-700">
                 <a href="{% url 'users:switch-hosting' %}">
                     {% if request.session.is_hosting %}
                         Guest Mode
@@ -9,16 +13,19 @@
                     {% endif %}
                 </a>
             </li>
+            <li class="nav_link"><a href="{{user.get_absolute_url}}">Profile</a></li>
             {% if request.session.is_hosting %}
                 <li class="nav_link"><a href="{% url 'rooms:create' %}">Create Room</a></li>
-            {% else %}
-                <li class="nav_link"><a href="{% url 'lists:see-favs' %}">Favs</a></li>
                 <li class="nav_link"><a href="{% url 'users:all-reservations' user.pk %}">Reservations</a></li>
+            {% else %}
+                <li class="nav_link"><a href="{% url 'users:all-reservations' user.pk %}">Reservations</a></li>
+                <li class="nav_link"><a href="{% url 'lists:see-favs' %}">Saved</a></li>
             {% endif %}
-            <li class="nav_link"><a href="{{user.get_absolute_url}}">Profile</a></li>
-            <li class="nav_link"><a href="{% url 'users:logout' %}">Log Out</a></li>
-        {% else %}
-            <li class="nav_link"><a href="{% url 'users:login' %}">Login</a></li>
-            <li class="nav_link"><a href="{% url 'users:signup' %}">Sign Up</a></li>
+            <li class="nav_link border-b-2 border-t-2 border-gray-700"><a href="{% url 'users:logout' %}">Log Out</a></li>
         {% endif %}
     </ul>
+    {% else %}
+    <button id="dropdown-button" class="text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center h-full">
+        <a href="{% url 'users:login' %}">Login</a>
+    </button>
+    {% endif %}

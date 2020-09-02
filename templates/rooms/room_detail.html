@@ -6,15 +6,14 @@
     <div class="container my-20 mx-auto">
         <div class="photo-slides mx-auto align-middle">
             {% for photo in room.get_all_photos %}
-                <div class="relative w-auto h-full overflow-hidden">
-                    <img class="max-w-full max-h-full overflow-hidden m-2" src={{photo.file.url}}>
+                <div class="w-1/2 h-50vh overflow-hidden m-1" style="background-image: url({{photo.file.url}}); background-size: cover; background-position: center">
                 </div>
             {% endfor %}
         </div>
     </div>
 
-    <div class="container mx-auto flex xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-around pb-56">
-        <div class="xl:w-1/2 lg:w-1/2 md:w-full sm:w-full">
+    <div class="room-detail container mx-auto flex flex-col justify-around pb-56 items-center">
+        <div class="xl:w-10/12 lg:w-10/12 md:w-full sm:w-full">
             <div class="flex justify-between">
                 <div class="mb-2">
                     <h4 class="text-xl font-medium mb-px">{{room.name}}</h4>
@@ -24,7 +23,7 @@
                         {% if on_favs_boolean %}
                             <a href="{% url 'lists:toggle-room' room.pk %}?action=remove"><i class="fas fa-heart text-red-600 mr-1"></i>Unsave</a>
                         {% else %}
-                            <a  href="{% url 'lists:toggle-room' room.pk %}?action=add"><i class="fas fa-heart text-white mr-1"></i>Save</a>
+                            <a  href="{% url 'lists:toggle-room' room.pk %}?action=add"><i class="far fa-heart text-red-600 mr-1"></i>Save</a>
                         {% endif %}
                     </p>
                 </div>
@@ -65,38 +64,41 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="flex xl:flex-row lg:flex-row sm:flex-col md:flex-col flex-col border-b border-gray-700">
             {% if not request.session.is_hosting %}
                 {% for calendar in room.get_calendars %}
-                    <div class="w-8/12 mx-auto">
-                        <span class="text-center block font-semibold text-lg mb-8">{{calendar.get_month}}/{{calendar.year}}</span>
-                        <div class="cal-grid mb-4 font-medium">
-                            {% for day in calendar.day_names %}
-                                <span>{{day}}</span>
-                            {% endfor %}
-                        </div>
-                        <div class="cal-grid">
-                            {% for day in calendar.get_days %}
-                                {% is_booked room day as is_booked_bool %}
-                                {% if day.number != 0 %}
-                                    {% if day.past %}
-                                        <span class="cal-number w-full text-center rounded bg-gray-400 text-gray-500 p-1">{{day}}</span>
-                                    {% elif is_booked_bool %}
-                                        <span class="cal-number w-full text-center rounded bg-gray-400 text-gray-500 p-1 line-through">{{day}}</span>            
+                    <div class="xl:w-1/2 lg:w-1/2 md:w-10/12 sm:w-10/12 m-10">
+                        <div class="w-full mx-auto">
+                            <span class="text-center block font-semibold text-lg mb-8">{{calendar.get_month}} {{calendar.year}}</span>
+                            <div class="cal-grid mb-4 font-medium">
+                                {% for day in calendar.day_names %}
+                                    <span>{{day}}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="cal-grid">
+                                {% for day in calendar.get_days %}
+                                    {% is_booked room day as is_booked_bool %}
+                                    {% if day.number != 0 %}
+                                        {% if day.past %}
+                                            <span class="cal-number w-full text-center rounded bg-gray-400 text-gray-500 p-1">{{day}}</span>
+                                        {% elif is_booked_bool %}
+                                            <span class="cal-number w-full text-center rounded bg-gray-400 text-gray-500 p-1 line-through">{{day}}</span>            
+                                        {% else %}
+                                            <a href="{% url 'reservations:create' room.pk day.year day.month day.number %}" class="cal-number w-full text-center rounded border border-gray-600 p-1 hover:bg-purple-400 hover:font-medium hover:text-white cursor-pointer">{{day}}</a>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="{% url 'reservations:create' room.pk day.year day.month day.number %}" class="cal-number w-full text-center rounded border border-gray-600 p-1 hover:bg-purple-400 hover:font-medium hover:text-white cursor-pointer">{{day}}</a>
+                                        <span></span>
                                     {% endif %}
-                                {% else %}
-                                    <span></span>
-                                {% endif %}
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
             {% endif %}
+            </div>
         </div>
-        <div class="xl:w-5/12 lg:w-5/12 md:w-full sm:w-full">
+        <div class="xl:w-8/12 lg:w-8/12 md:w-full sm:w-full mt-10">
             <div>
-                <h4 class="font-medium text-lg mb-5">Reviews</h4>
                 <div class="flex items-center">
                     <div>
                         <i class="fas fa-star text-yellow-400"></i>

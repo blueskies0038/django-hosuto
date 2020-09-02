@@ -11,6 +11,6 @@ class CreateReviewForm(forms.ModelForm):
         model = Review
         fields = ("review", "accuracy", "communication", "cleanliness", "value")
         
-        def save(self, *args, **kwargs):
+        def save(self):
             review = super().save(commit=False)
             return review

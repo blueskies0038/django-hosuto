@@ -40,9 +40,9 @@
                    </form>
                 {% else %}
                         {% if reservation.status == 'pending' %}
-                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn-link block px-5 w-full">Cancel Reservation</a>
+                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn-link block px-5 m-3 w-full">Cancel Reservation</a>
                             {% if reservation.room.host == user  %}
-                                <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn-link block px-3 mb-5 w-full">Confirm Reservation</a>
+                                <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn-link block px-3 m-3 w-full">Confirm Reservation</a>
                             {% endif %}
                         {% endif %}
                     {% endif %}
