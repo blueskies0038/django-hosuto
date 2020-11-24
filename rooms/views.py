@@ -23,8 +23,9 @@ class RoomDetail(DetailView):
 
 def search(request):
 
-    country = request.GET.get("country")
-    if country:
+    city = request.GET.get("city")
+
+    if not city:
         form = SearchForm(request.GET)
         if form.is_valid():
             city = form.cleaned_data.get("city")
@@ -77,18 +78,29 @@ def search(request):
             for facility in facilities:
                 filter_args["facilities"] = facility
 
+            
             qset = Room.objects.filter(**filter_args).order_by("-created")
             paginator = Paginator(qset, 12, orphans=3)
             page = request.GET.get("page", 1)
             rooms = paginator.get_page(page)
 
             return render(request, "rooms/search.html", {"form": form, "rooms": rooms,})
+        
+        return render(request, "rooms/search.html", {"form": form,})
 
     else:
+        filter_args = {}
+        filter_args["city__startswith"] = city
+
+        qset = Room.objects.filter(**filter_args).order_by("-created")
+        paginator = Paginator(qset, 12, orphans=3)
+        page = request.GET.get("page", 1)
+        rooms = paginator.get_page(page)
+
         form = SearchForm()
 
+        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
 
-    return render(request, "rooms/search.html", {"form": form})
 
 class EditRoomView(users_mixins.LoggedInOnlyView, UpdateView):
     model = Room

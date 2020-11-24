@@ -61,6 +61,7 @@ def complete_verify(request, key):
     try:
         user = User.objects.get(email_secret=key)
         user.email_verified = True
+        user.email_secret = ""
         user.save()
     except User.DoesNotExist:
         pass
@@ -183,8 +184,8 @@ def switch_hosting(request):
 def all_reservations(request, pk):
     host = User.objects.get(pk=pk)
     guest = User.objects.get(pk=pk)
-    reservations = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="pending")
-    confirmed = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="confirmed")
-    all_reservations = reservation_models.Reservation.objects.all()
-    guest_reservations = [r for r in all_reservations if r.room.host == host]
+    reservations = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="pending").order_by("check_in")
+    confirmed = reservation_models.Reservation.objects.all().filter(guest=guest).filter(status="confirmed").order_by("check_in")
+    all_reservations = reservation_models.Reservation.objects.all().filter(status="pending")
+    guest_reservations = [r for r in all_reservations if r.room.host == host and r.status != "canceled"]
     return render(request, "reservations/all.html", {"reservations": reservations, "confirmed": confirmed, "guest_reservations": guest_reservations})

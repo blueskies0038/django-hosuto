@@ -4,11 +4,11 @@
 
 {% block content %}
 
-    <div class="container mx-auto flex flex-col items-center">
-        <h3 class="mb-12 text-xl text-center">Your Favorites</h3>
-        <div class="container mx-auto pb-10">
-            <div class="flex w-full flex-wrap">
-                {% for room in user.list.rooms.all %}
+    <div class="min-h-75vh">
+        <h3 class="mb-12 text-2xl text-center">Your Favourites</h3>
+        <div class="container mx-auto pb-10 ">
+            <div class="flex flex-wrap">
+                {% for room in user.list.rooms.all  %}
                     {% include 'mixins/room_card.html' with room=room %}
                 {% endfor %}
             </div>

@@ -26,7 +26,7 @@ SECRET_KEY = 'qfzu947&qcio0z#8gd6mh4=-ts!qgb^elg$=%*nr@b3t2hg)8@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
 
 
 # Application definition
@@ -38,6 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    
+    'social_django',
 
     'django_countries',
     'django_seed',
@@ -51,6 +60,8 @@ INSTALLED_APPS = [
     'core',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,7 +72,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'airbnb.urls'
+ROOT_URLCONF = 'hosuto.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +90,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'airbnb.wsgi.application'
+WSGI_APPLICATION = 'hosuto.wsgi.application'
 
 
 # Database
@@ -92,6 +103,15 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -148,4 +168,12 @@ EMAIL_FROM = "airbnb@sandbox2ba559537f904296851b8b1b0c8d7d24.mailgun.org"
 
 LOGIN_URL = "/users/login"
 
-LOCALE_PATH = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '137050288806-lljrtdu7nq5nd5b59773lj81qht1iaog.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'G8E4be6OTU6h_TU9idcsp15f'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1010882992742356'
+SOCIAL_AUTH_FACEBOOK_SECRET = '78934465168a143dc33871623d3d889c'
+
+LOGIN_REDIRECT_URL = '/#'

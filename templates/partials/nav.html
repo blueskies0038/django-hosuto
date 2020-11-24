@@ -1,6 +1,7 @@
     {% if user.is_authenticated%}
-    <button id="dropdown-button" class="text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center h-full">
-        <span class="mr-1">Dropdown</span>
+    <button id="dropdown-button" class="text-gray-700 font-semibold py-2 px-6 rounded inline-flex items-center h-full">
+        {% include 'mixins/user_avatar.html' with user=user h='h-10' w='w-10' text='1' %}
+        <i class="fas fa-angle-down ml-4"></i>
     </button>
     <ul id="dropdown-menu" class="dropdown-menu absolute hidden pt-1 h-full">
         {% if user.is_authenticated %}

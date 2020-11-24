@@ -52,8 +52,7 @@ class ReservationDetailView(View):
 def edit_reservation(request, pk, verb):
     reservation = models.Reservation.objects.get_or_none(pk=pk)
     if not reservation or (
-        reservation.guest != request.user and reservation.room.host != request.user
-    ):
+        reservation.guest != request.user and reservation.room.host != request.user):
         raise Http404()
     if verb == "confirm":
         reservation.status = models.Reservation.STATUS_CONFIRMED

@@ -18,6 +18,7 @@
                 <div class="mb-2">
                     <h4 class="text-xl font-medium mb-px">{{room.name}}</h4>
                     <span class="text-gray-700 font-light">{{room.city}}</span>
+                    {% if user.is_authenticated %}
                     <p class="mt-2">
                         {% on_favs room as on_favs_boolean %}
                         {% if on_favs_boolean %}
@@ -26,6 +27,7 @@
                             <a  href="{% url 'lists:toggle-room' room.pk %}?action=add"><i class="far fa-heart text-red-600 mr-1"></i>Save</a>
                         {% endif %}
                     </p>
+                    {% endif %}
                 </div>
                 <a href="{{room.host.get_absolute_url}}" class="flex flex-col items-center">
                     {% include 'mixins/user_avatar.html' with user=room.host %}
@@ -84,7 +86,11 @@
                                         {% elif is_booked_bool %}
                                             <span class="cal-number w-full text-center rounded bg-gray-400 text-gray-500 p-1 line-through">{{day}}</span>            
                                         {% else %}
+                                            {% if user.is_authenticated %}
                                             <a href="{% url 'reservations:create' room.pk day.year day.month day.number %}" class="cal-number w-full text-center rounded border border-gray-600 p-1 hover:bg-purple-400 hover:font-medium hover:text-white cursor-pointer">{{day}}</a>
+                                            {% else %}
+                                            <a href="{% url 'users:login' %}" class="cal-number w-full text-center rounded border border-gray-600 p-1 hover:bg-purple-400 hover:font-medium hover:text-white cursor-pointer">{{day}}</a>
+                                            {% endif %}
                                         {% endif %}
                                     {% else %}
                                         <span></span>

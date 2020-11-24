@@ -11,7 +11,7 @@
     @apply border-r-2 border-l-2 border-gray-700;
     a{
         @apply bg-white py-4 px-5 block whitespace-no-wrap flex justify-center text-gray-700;
-    }
+    };
 }
 
 .btn{
@@ -121,6 +121,10 @@ form{
 
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+.convo-box {
+    width: 500px;
 }
 
 

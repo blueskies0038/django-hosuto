@@ -19,7 +19,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span>{{reservation.check_in}} - {{reservation.check_out}}</span>
-                    <span class="{% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'canceled' %} text-red-600 {% else %} text-teal-600 {% endif %} text-right font-semibold">{{reservation.status_display}}</span>
+                    <span class="{% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'canceled' %} text-red-600 {% else %} text-teal-600 {% endif %} text-right font-semibold">{{reservation.get_status_display}}</span>
                 </div>
             </div>
             {% endfor %}

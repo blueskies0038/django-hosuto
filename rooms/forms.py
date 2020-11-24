@@ -4,7 +4,7 @@ from .models import *
 
 class SearchForm(forms.Form):
     city = forms.CharField(required=False, initial="Anywhere")
-    country = CountryField(default="KR").formfield()
+    country = CountryField(default="US").formfield()
     room_type = forms.ModelChoiceField(
         required=False, empty_label="Any kind", queryset=RoomType.objects.all()
     )
@@ -13,8 +13,6 @@ class SearchForm(forms.Form):
     bedrooms = forms.IntegerField(required=False)
     beds = forms.IntegerField(required=False)
     baths = forms.IntegerField(required=False)
-    instant_book = forms.BooleanField(required=False)
-    superhost = forms.BooleanField(required=False)
     amenities = forms.ModelMultipleChoiceField(
         required=False,
         queryset=Amenity.objects.all(),
@@ -44,6 +42,9 @@ class CreateRoomForm(forms.ModelForm):
         model = Room
         fields = ("name", "description", "country", "city", "price", "address", "guests", "beds", "bedrooms", "baths", "check_in",
                   "check_out", "instant_book", "room_type", "amenities", "facilities", "house_rules")
+        widgets = {'amenities': forms.CheckboxSelectMultiple,
+                   'facilities': forms.CheckboxSelectMultiple,
+                   'house_rules': forms.CheckboxSelectMultiple}
     
     def save(self, *args, **kwargs):
         room = super().save(commit=False)
