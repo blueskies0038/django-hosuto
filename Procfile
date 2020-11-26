@@ -1,1 +1,1 @@
-"web: gunicorn--bind :8000 --workers 3 --threads 2:hosuto.wsgi: application
+web: gunicorn hosuto.wsgi --log-file -
