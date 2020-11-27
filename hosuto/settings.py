@@ -30,7 +30,7 @@ DEBUG = bool(os.environ.get("DEBUG"))
 
 print(DEBUG)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com']
 
 
 # Application definition
