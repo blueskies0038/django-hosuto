@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'hosuto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG:
+if DEBUG is True:
 
     DATABASES = {
         'default': {
@@ -189,8 +189,8 @@ LOGIN_REDIRECT_URL = '/#'
 
 if not DEBUG:
     sentry_sdk.init(
-    dsn=os.environ.get("SENTRY_URL"),
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=0.5,
-    send_default_pii=True
+        dsn=os.environ.get("SENTRY_URL"),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=0.5,
+        send_default_pii=True
     )
