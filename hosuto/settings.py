@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'qfzu947&qcio0z#8gd6mh4=-ts!qgb^elg$=%*nr@b3t2hg)8@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = bool(os.environ.get("DEBUG"))
 
 ALLOWED_HOSTS = ['127.0.0.1', 'hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com']
 
@@ -98,12 +98,27 @@ WSGI_APPLICATION = 'hosuto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get("RDS_HOST"),
+            'NAME': os.environ.get("RDS_NAME"),
+            'USER': os.environ.get("RDS_USER"),
+            'PASSWORD': os.environ.get("RDS_PASSWORD"),
+            'PORT': '5432',
+        }
+    }
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -172,10 +187,10 @@ LOGIN_URL = "/users/login"
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '137050288806-lljrtdu7nq5nd5b59773lj81qht1iaog.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'G8E4be6OTU6h_TU9idcsp15f'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("GOOGLE_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("GOOGLE_KEY")
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1010882992742356'
-SOCIAL_AUTH_FACEBOOK_SECRET = '78934465168a143dc33871623d3d889c'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("FB_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FB_SECRET")
 
 LOGIN_REDIRECT_URL = '/#'
