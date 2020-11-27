@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG"))
 
-ALLOWED_HOSTS = ['127.0.0.1', '.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com']
 
 
 # Application definition
@@ -39,19 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
     
     'social_django',
 
     'django_countries',
     'django_seed',
-
-    'gunicorn',
 
     'rooms',
     'users',
@@ -126,8 +118,6 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
 
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 # Password validation
