@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -21,7 +23,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET")
+SECRET_KEY = os.environ.get("DJANGO_SECRET", "tPRQf$E8r9LbtP4!UuJwW4u9vzw^FsHN-")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG"))
@@ -90,7 +92,7 @@ WSGI_APPLICATION = 'hosuto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG is False:
+if DEBUG:
 
     DATABASES = {
         'default': {
@@ -184,3 +186,11 @@ SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("FB_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FB_SECRET")
 
 LOGIN_REDIRECT_URL = '/#'
+
+if not DEBUG:
+    sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_URL"),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=0.5,
+    send_default_pii=True
+    )
