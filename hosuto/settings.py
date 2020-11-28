@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'social_django',
     'django_countries',
     'django_seed',
-    'django_storages',
+    'storages',
 
     'rooms',
     'users',
