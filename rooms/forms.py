@@ -13,16 +13,6 @@ class SearchForm(forms.Form):
     bedrooms = forms.IntegerField(required=False)
     beds = forms.IntegerField(required=False)
     baths = forms.IntegerField(required=False)
-    amenities = forms.ModelMultipleChoiceField(
-        required=False,
-        queryset=Amenity.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-    )
-    facilities = forms.ModelMultipleChoiceField(
-        required=False,
-        queryset=Facility.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-    )
 
 class CreatePhotoForm(forms.ModelForm):
 
