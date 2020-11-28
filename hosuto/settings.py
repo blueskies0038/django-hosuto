@@ -195,7 +195,7 @@ if not DEBUG:
     AWS_ACCESS_KEY_ID = os.environ.get("AWS_ID")
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET")
     AWS_STORAGE_BUCKET_NAME = "hosuto-bucket"
-    AWS_DEFAULT_ACL = "public-read"
+    AWS_DEFAULT_ACL = None
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.us-east-2.amazonaws.com/uploads"
