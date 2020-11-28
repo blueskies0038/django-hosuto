@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     'social_django',
-
     'django_countries',
     'django_seed',
+    'django_storages',
 
     'rooms',
     'users',
@@ -190,6 +190,16 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FB_SECRET")
 LOGIN_REDIRECT_URL = '/#'
 
 if not DEBUG:
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET")
+    AWS_STORAGE_BUCKET_NAME = "hosuto-bucket"
+
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static"
+
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_URL"),
         integrations=[DjangoIntegration()],
