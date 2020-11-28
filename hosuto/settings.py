@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET", "tPRQf$E8r9LbtP4!UuJwW4u9vzw^FsHN-"
 DEBUG = bool(os.environ.get("DEBUG"))
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com', '3.21.220.95',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.us-east-2.elasticbeanstalk.com', '3.21.220.95',]
 
 
 # Application definition
