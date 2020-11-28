@@ -186,7 +186,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("GOOGLE_KEY")
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("FB_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FB_SECRET")
 
-LOGIN_REDIRECT_URL = 'http://hosuto-live.eba-xzbesdhv.us-east-2.elasticbeanstalk.com/'
+LOGIN_REDIRECT_URL = '#/'
 
 if not DEBUG:
 
