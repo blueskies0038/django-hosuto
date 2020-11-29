@@ -10,7 +10,7 @@ class PhotoInline(admin.TabularInline):
 class RoomAdmin(admin.ModelAdmin):
     inlines = (PhotoInline,)
 
-    fieldsets = (("Basic Info", {"fields": ("name", "description", "country", "address", "price",)}),
+    fieldsets = (("Basic Info", {"fields": ("name", "description", "city", "country", "address", "price",)}),
                  ("Times", {"fields": ("check_in", "check_out", "instant_book",)}),
                  ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths",)}),
                  ("More About the Space", {"fields": ("amenities", "facilities", "house_rules",)}),
