@@ -26,12 +26,13 @@ class Command(BaseCommand):
                 "host": lambda x: random.choice(all_users),
                 "room_type": lambda x: random.choice(room_types),
                 "guests": lambda x: random.randint(1, 10),
-                "price": lambda x: random.randint(50, 500),
+                "price": lambda x: random.randint(50, 300),
                 "beds": lambda x: random.randint(1, 10),
                 "bedrooms": lambda x: random.randint(1, 5),
                 "baths": lambda x: random.randint(1, 5),
             },
         )
+        created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
         amenities = room_models.Amenity.objects.all()
         facilities = room_models.Facility.objects.all()
