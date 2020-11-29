@@ -25,25 +25,19 @@ class Command(BaseCommand):
                 "name": lambda x: seeder.faker.address(),
                 "host": lambda x: random.choice(all_users),
                 "room_type": lambda x: random.choice(room_types),
-                "guests": lambda x: random.randint(1, 20),
-                "price": lambda x: random.randint(1, 300),
-                "beds": lambda x: random.randint(1, 5),
+                "guests": lambda x: random.randint(1, 10),
+                "price": lambda x: random.randint(50, 500),
+                "beds": lambda x: random.randint(1, 10),
                 "bedrooms": lambda x: random.randint(1, 5),
                 "baths": lambda x: random.randint(1, 5),
             },
         )
-        created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
         amenities = room_models.Amenity.objects.all()
         facilities = room_models.Facility.objects.all()
         rules = room_models.HouseRule.objects.all()
         for pk in created_clean:
             room = room_models.Room.objects.get(pk=pk)
-            for i in range(3, random.randint(5, 10)):
-                room_models.Photo.objects.create(
-                    caption=seeder.faker.sentence(), 
-                    room=room, 
-                    file=f'/media/{random.randint(1, 31)}.webp')
             for a in amenities:
                 magic_number = random.randint(0, 15)
                 if magic_number % 2 == 0:
