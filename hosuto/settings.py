@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET", "tPRQf$E8r9LbtP4!UuJwW4u9vzw^FsHN-"
 DEBUG = bool(os.environ.get("DEBUG"))
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.us-east-2.elasticbeanstalk.com', '3.21.220.95',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.us-east-2.elasticbeanstalk.com', '3.21.220.95', 'eba-xzbesdhv.us-east-2.elasticbeanstalk.com',]
 
 
 # Application definition
@@ -120,7 +120,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
-
 ]
 
 # Password validation
@@ -168,13 +167,6 @@ AUTH_USER_MODEL = 'users.User'
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
-
-
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("MAILGUN_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
-EMAIL_FROM = "airbnb@sandbox2ba559537f904296851b8b1b0c8d7d24.mailgun.org"
 
 LOGIN_URL = "/users/login"
 
