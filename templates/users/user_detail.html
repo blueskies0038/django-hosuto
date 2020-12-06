@@ -22,7 +22,7 @@
         {% if user_obj.rooms.count > 0 %}
             <div class="container flex flex-col items-center">
                 <h3 class="mb-6 text-lg">Rooms</h3>
-                <div class="flex w-full flex-wrap">
+                <div class="flex flex-wrap w-full">
                     {% for room in user_obj.rooms.all %}
                         {% include 'mixins/room_card.html' with room=room %}
                     {% endfor %}

@@ -36,8 +36,6 @@ def search(request):
             bedrooms = form.cleaned_data.get("bedrooms")
             beds = form.cleaned_data.get("beds")
             baths = form.cleaned_data.get("baths")
-            instant_book = form.cleaned_data.get("instant_book")
-            superhost = form.cleaned_data.get("superhost")
             amenities = form.cleaned_data.get("amenities")
             facilities = form.cleaned_data.get("facilities")
 
@@ -46,7 +44,8 @@ def search(request):
             if city != "Anywhere":
                 filter_args["city__startswith"] = city
 
-            filter_args["country"] = country
+            if country != "Anywhere":
+                filter_args["country"] = country
 
             if room_type is not None:
                 filter_args["room_type"] = room_type
@@ -66,21 +65,8 @@ def search(request):
             if baths is not None:
                 filter_args["baths__gte"] = baths
 
-            if instant_book is True:
-                filter_args["instant_book"] = True
-
-            if superhost is True:
-                filter_args["host__superhost"] = True
-
-            for amenity in amenities:
-                filter_args["amenities"] = amenity
-
-            for facility in facilities:
-                filter_args["facilities"] = facility
-
-            
             qset = Room.objects.filter(**filter_args).order_by("-created")
-            paginator = Paginator(qset, 12, orphans=3)
+            paginator = Paginator(qset, 6, orphans=3)
             page = request.GET.get("page", 1)
             rooms = paginator.get_page(page)
 
