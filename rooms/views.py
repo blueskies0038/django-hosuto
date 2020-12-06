@@ -24,6 +24,7 @@ class RoomDetail(DetailView):
 def search(request):
 
     city = request.GET.get("city")
+    print(city)
 
     if not city:
         form = SearchForm(request.GET)
@@ -36,6 +37,7 @@ def search(request):
             bedrooms = form.cleaned_data.get("bedrooms")
             beds = form.cleaned_data.get("beds")
             baths = form.cleaned_data.get("baths")
+
 
             filter_args = {}
 
@@ -70,6 +72,9 @@ def search(request):
 
             return render(request, "rooms/search.html", {"form": form, "rooms": rooms,})
         
+        return render(request, "rooms/search.html", {"form": form,})
+
+    else:
         filter_args = {}
         filter_args["city__startswith"] = city
 
@@ -78,20 +83,9 @@ def search(request):
         page = request.GET.get("page", 1)
         rooms = paginator.get_page(page)
 
-        return render(request, "rooms/search.html", {"form": form,})
-
-    else:
-        filter_args = {}
-        filter_args["city__startswith"] = city
-
-        qset = Room.objects.filter(**filter_args).order_by("-created")
-        paginator = Paginator(qset, 12, orphans=3)
-        page = request.GET.get("page", 1)
-        rooms = paginator.get_page(page)
-
         form = SearchForm()
 
-        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
+        return render(request, "rooms/search.html", {"form": form, "rooms": rooms,})
 
 
 class EditRoomView(users_mixins.LoggedInOnlyView, UpdateView):
