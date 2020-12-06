@@ -36,8 +36,6 @@ def search(request):
             bedrooms = form.cleaned_data.get("bedrooms")
             beds = form.cleaned_data.get("beds")
             baths = form.cleaned_data.get("baths")
-            amenities = form.cleaned_data.get("amenities")
-            facilities = form.cleaned_data.get("facilities")
 
             filter_args = {}
 
@@ -72,6 +70,14 @@ def search(request):
 
             return render(request, "rooms/search.html", {"form": form, "rooms": rooms,})
         
+        filter_args = {}
+        filter_args["city__startswith"] = city
+
+        qset = Room.objects.filter(**filter_args).order_by("-created")
+        paginator = Paginator(qset, 6, orphans=3)
+        page = request.GET.get("page", 1)
+        rooms = paginator.get_page(page)
+
         return render(request, "rooms/search.html", {"form": form,})
 
     else:
