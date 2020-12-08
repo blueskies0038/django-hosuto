@@ -24,7 +24,6 @@ class RoomDetail(DetailView):
 def search(request):
 
     city = request.GET.get("city")
-    print(city)
 
     if not city:
         form = SearchForm(request.GET)
