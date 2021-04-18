@@ -1,3 +1,3 @@
-#Airbnb Clone
+#Deployed Project
 
-Cloning Airbnb with Python, Django, Tailwind, and more.
+http://hosuto.eba-xzbesdhv.us-east-2.elasticbeanstalk.com/
